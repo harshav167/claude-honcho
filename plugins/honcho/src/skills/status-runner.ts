@@ -5,10 +5,18 @@
  */
 import { Honcho, type Page, type Conclusion } from "@honcho-ai/sdk";
 import type { QueueStatus } from "@honcho-ai/sdk";
-import { loadConfig, getHonchoClientOptions, getEndpointInfo, getSessionName } from "../config.js";
+import {
+  loadConfig,
+  getHonchoClientOptions,
+  getEndpointInfo,
+  getSessionName,
+  detectHost,
+  setDetectedHost,
+} from "../config.js";
 import * as s from "../styles.js";
 
 async function status(): Promise<void> {
+  setDetectedHost(detectHost());
   console.log("");
   console.log(s.header("honcho status"));
   console.log("");
