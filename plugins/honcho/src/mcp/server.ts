@@ -10,6 +10,7 @@ import {
   loadConfig,
   saveConfig,
   saveRootField,
+  detectHost,
   getHonchoClientOptions,
   getSessionName,
   getConfigPath,
@@ -514,7 +515,7 @@ function handleSetConfig(args: Record<string, unknown>) {
 }
 
 export async function runMcpServer(): Promise<void> {
-  setDetectedHost("claude_code");
+  setDetectedHost(detectHost());
   const config = loadConfig();
   if (!config) {
     console.error("[honcho-mcp] Not configured. Run: honcho init");

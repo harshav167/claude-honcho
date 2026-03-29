@@ -7,6 +7,7 @@ import {
   getConfigPath,
   getConfigDir,
   getHonchoClientOptions,
+  detectHost,
   getDetectedHost,
   getDefaultWorkspace,
   getDefaultAiPeer,
@@ -16,8 +17,7 @@ import {
 import * as s from "../styles.js";
 
 async function setup(): Promise<void> {
-  // Default to claude_code for this runner
-  setDetectedHost("claude_code");
+  setDetectedHost(detectHost());
 
   console.log("");
   console.log(s.header("honcho setup"));
@@ -92,7 +92,7 @@ async function setup(): Promise<void> {
       const { saveRootField } = await import("../config.js");
       saveRootField("apiKey", config.apiKey);
       saveRootField("peerName", config.peerName);
-      // Per-host config goes in hosts.claude_code via saveConfig
+      // Per-host config goes in hosts.<detected-host> via saveConfig
       saveConfig({
         apiKey: config.apiKey,
         peerName: config.peerName,

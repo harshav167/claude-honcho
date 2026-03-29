@@ -53,7 +53,7 @@ const HONCHO_BASE_URLS = {
 // Host Detection
 // ============================================
 
-export type HonchoHost = "cursor" | "claude_code" | "obsidian";
+export type HonchoHost = "cursor" | "claude_code" | "factory_droid" | "obsidian";
 
 export interface HostConfig {
   /** Honcho workspace name for this host */
@@ -89,23 +89,35 @@ export function getDetectedHost(): HonchoHost {
 export function detectHost(stdinInput?: Record<string, unknown>): HonchoHost {
   // Explicit env var override (used by install scripts and external tooling)
   const envHost = process.env.HONCHO_HOST;
-  if (envHost === "cursor" || envHost === "claude_code" || envHost === "obsidian") return envHost;
+  if (
+    envHost === "cursor" ||
+    envHost === "claude_code" ||
+    envHost === "factory_droid" ||
+    envHost === "obsidian"
+  ) {
+    return envHost;
+  }
 
   if (stdinInput?.cursor_version) return "cursor";
   // Cursor sets CURSOR_PROJECT_DIR for child processes (incl. Claude Code inside Cursor)
   if (process.env.CURSOR_PROJECT_DIR) return "cursor";
+  if (process.env.FACTORY_PROJECT_DIR || process.env.DROID_PLUGIN_ROOT) {
+    return "factory_droid";
+  }
   return "claude_code";
 }
 
 const DEFAULT_WORKSPACE: Record<HonchoHost, string> = {
   "cursor": "cursor",
   "claude_code": "claude_code",
+  "factory_droid": "factory_droid",
   "obsidian": "obsidian",
 };
 
 const DEFAULT_AI_PEER: Record<HonchoHost, string> = {
   "cursor": "cursor",
   "claude_code": "claude",
+  "factory_droid": "droid",
   "obsidian": "honcho",
 };
 
@@ -174,6 +186,7 @@ interface HonchoFileConfig {
   // Legacy flat fields (read-only fallbacks when no hosts block)
   cursorPeer?: string;
   claudePeer?: string;
+  droidPeer?: string;
 }
 
 /** Resolved runtime config consumed by all other code.
@@ -294,6 +307,8 @@ function resolveConfig(raw: HonchoFileConfig, host: HonchoHost): HonchoCLAUDECon
     workspace = process.env.HONCHO_WORKSPACE ?? raw.workspace ?? DEFAULT_WORKSPACE[host];
     if (host === "cursor") {
       aiPeer = raw.cursorPeer ?? DEFAULT_AI_PEER["cursor"];
+    } else if (host === "factory_droid") {
+      aiPeer = raw.droidPeer ?? raw.aiPeer ?? raw.claudePeer ?? DEFAULT_AI_PEER["factory_droid"];
     } else {
       aiPeer = raw.claudePeer ?? DEFAULT_AI_PEER["claude_code"];
     }
@@ -342,9 +357,12 @@ export function loadConfigFromEnv(host?: HonchoHost): HonchoCLAUDEConfig | null 
   const resolvedHost = host ?? getDetectedHost();
   const peerName = process.env.HONCHO_PEER_NAME || process.env.USER || process.env.USERNAME || "user";
   const workspace = process.env.HONCHO_WORKSPACE || DEFAULT_WORKSPACE[resolvedHost];
-  const hostPeerEnv = resolvedHost === "cursor"
-    ? process.env.HONCHO_CURSOR_PEER
-    : process.env.HONCHO_CLAUDE_PEER;
+  const hostPeerEnv =
+    resolvedHost === "cursor"
+      ? process.env.HONCHO_CURSOR_PEER
+      : resolvedHost === "factory_droid"
+        ? process.env.HONCHO_DROID_PEER
+        : process.env.HONCHO_CLAUDE_PEER;
   const aiPeer = process.env.HONCHO_AI_PEER || hostPeerEnv || DEFAULT_AI_PEER[resolvedHost];
   const endpoint = process.env.HONCHO_ENDPOINT;
 
