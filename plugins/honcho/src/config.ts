@@ -753,7 +753,7 @@ export function getHonchoClientOptions(config: HonchoCLAUDEConfig): HonchoClient
     apiKey: config.apiKey,
     baseURL: getHonchoBaseUrl(config),
     workspaceId: config.workspace,
-    timeout: 8000,
+    timeout: 30000,
     maxRetries: 1,
   };
 }
