@@ -1,10 +1,10 @@
 {
   "mcpServers": {
     "honcho": {
-      "command": "sh",
+      "command": "bun",
       "args": [
-        "-lc",
-        "exec bun run \"$DROID_PLUGIN_ROOT/mcp-server.ts\""
+        "run",
+        "${CLAUDE_PLUGIN_ROOT}/mcp-server.ts"
       ]
     }
   }
