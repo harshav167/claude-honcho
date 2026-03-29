@@ -1,6 +1,6 @@
 ---
+name: honcho-integrate
 description: Integrate Honcho memory and social cognition into existing Python or TypeScript codebases. Use when adding Honcho SDK, setting up peers, configuring sessions, implementing the dialectic chat endpoint for AI agents, or wiring Honcho into bot frameworks (nanobot, openclaw, picoclaw, etc).
-allowed-tools: Read, Glob, Grep, Bash(uv:*), Bash(bun:*), Bash(npm:*), Edit, Write, WebFetch, AskUserQuestion
 user-invocable: true
 ---
 
@@ -38,7 +38,7 @@ Use Glob and Grep to find:
 
 ### Phase 2: Interview (REQUIRED)
 
-After exploring the codebase, use the **AskUserQuestion** tool to clarify integration requirements. Ask these questions (adapt based on what you learned in Phase 1):
+After exploring the codebase, use the **AskUser** tool to clarify integration requirements. Ask these questions (adapt based on what you learned in Phase 1):
 
 #### Question Set 1 - Entities & Peers
 

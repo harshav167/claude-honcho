@@ -169,7 +169,7 @@ function handleGetConfig(cwd: string) {
 
   // Check for legacy fields without hosts block
   if (cfgExists && !rawFile.hosts) {
-    warnings.push("Config uses legacy flat fields. Consider running /honcho:config to migrate to hosts block.");
+    warnings.push("Config uses legacy flat fields. Consider running /honcho-config to migrate to hosts block.");
   }
 
   if (cfgExists && rawFile.hosts && rawFile.workspace && rawFile.globalOverride === undefined) {

@@ -1,0 +1,12 @@
+{
+  "name": "honcho",
+  "version": "0.2.3",
+  "description": "Persistent memory for Droid sessions using Honcho by Plastic Labs",
+  "author": {
+    "name": "Plastic Labs",
+    "email": "hello@plasticlabs.ai"
+  },
+  "homepage": "https://honcho.dev",
+  "repository": "https://github.com/plastic-labs/claude-honcho",
+  "license": "MIT"
+}

@@ -51,7 +51,7 @@ async function setup(): Promise<void> {
       console.log("  2. Add to ~/.zshrc or ~/.bashrc:");
       console.log(s.dim('     export HONCHO_API_KEY="your-key-here"'));
     }
-    console.log("  3. Restart Claude Code and run /honcho:setup");
+    console.log("  3. Restart Droid and run /honcho-setup");
     process.exit(1);
   }
 

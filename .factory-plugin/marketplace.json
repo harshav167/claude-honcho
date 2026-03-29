@@ -1,0 +1,22 @@
+{
+  "name": "claude-honcho",
+  "description": "Honcho plugins for Factory Droid - memory, development tools, and more",
+  "owner": {
+    "name": "Plastic Labs",
+    "email": "hello@plasticlabs.ai"
+  },
+  "plugins": [
+    {
+      "name": "honcho",
+      "source": "./plugins/honcho",
+      "description": "Persistent memory for Droid sessions using Honcho",
+      "category": "memory"
+    },
+    {
+      "name": "honcho-dev",
+      "source": "./plugins/honcho-dev",
+      "description": "Skills for building AI applications with the Honcho SDK",
+      "category": "development"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 ---
+name: honcho-config
 description: Configure Honcho memory plugin settings interactively
 allowed-tools: get_config, set_config
 user-invocable: true
@@ -6,7 +7,7 @@ user-invocable: true
 
 # Honcho Configuration
 
-Interactive configuration for the Honcho memory plugin. Uses AskUserQuestion for all menus and selections — never dump numbered text lists.
+Interactive configuration for the Honcho memory plugin. Uses AskUser for all menus and selections — never dump numbered text lists.
 
 ## Step 1: Status Header
 
@@ -28,7 +29,7 @@ Call `get_config` to load the current state. The response includes a `card` fiel
 Present ONE question with these options (the user can select "Other" to reach advanced settings):
 
 ```
-AskUserQuestion:
+AskUser:
   question: "What would you like to configure?"
   header: "Config"
   options:
@@ -43,7 +44,7 @@ AskUserQuestion:
 If the user selects "Other", present advanced options:
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Advanced settings:"
   header: "Advanced"
   options:
@@ -61,10 +62,10 @@ Always include current values in the description so the user can see what's set.
 
 ### Peers
 
-When selected, use `AskUserQuestion` to ask which peer to change:
+When selected, use `AskUser` to ask which peer to change:
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Which peer to change?"
   header: "Peers"
   options:
@@ -78,12 +79,12 @@ Then ask for the new value. Call `set_config` with `peerName` or `aiPeer`.
 
 ### Simple fields (Logging, etc.)
 
-Use `AskUserQuestion` to ask for the new value if there are known options, otherwise ask the user to type it. Call `set_config` with the appropriate field. Show the result.
+Use `AskUser` to ask for the new value if there are known options, otherwise ask the user to type it. Call `set_config` with the appropriate field. Show the result.
 
 ### Session mapping
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Which session mapping strategy?"
   header: "Sessions"
   options:
@@ -100,7 +101,7 @@ Do NOT use markdown previews for this menu — descriptions are sufficient and p
 After strategy selection, ask about peer prefix:
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Include your name in session names?"
   header: "Prefix"
   options:
@@ -115,7 +116,7 @@ AskUserQuestion:
 When selected, present a sub-menu:
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Workspace settings?"
   header: "Workspace"
   options:
@@ -127,10 +128,10 @@ AskUserQuestion:
 
 #### Workspace > Rename
 
-Dangerous field — requires confirmation. First call `set_config` WITHOUT `confirm: true`. The tool will return a description of what will happen. Use `AskUserQuestion` to confirm:
+Dangerous field — requires confirmation. First call `set_config` WITHOUT `confirm: true`. The tool will return a description of what will happen. Use `AskUser` to confirm:
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Switch workspace to '{value}'?"
   header: "Confirm"
   options:
@@ -149,7 +150,7 @@ Linking and global mode are one concept: if any hosts are linked, global mode is
 Show one option per host. Each option is either "Link {host}" or "Unlink {host}" depending on current state. Do NOT use multiSelect — use single-select so only one action happens at a time.
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Link or unlink a host:"
   header: "Link"
   options:
@@ -168,7 +169,7 @@ Call `set_config` with `field: "linkedHosts"` and the new array.
 If this is the first link (was previously empty), prompt for shared workspace:
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Shared workspace name?"
   header: "Workspace"
   options:
@@ -197,14 +198,14 @@ If hosts remain linked, just confirm: "Unlinked {host}. Still linked to: {remain
 
 ### Dangerous fields (Host)
 
-Host changes require confirmation. First call `set_config` WITHOUT `confirm: true`. The tool will return a description of what will happen. Use `AskUserQuestion` to confirm, then call again WITH `confirm: true`.
+Host changes require confirmation. First call `set_config` WITHOUT `confirm: true`. The tool will return a description of what will happen. Use `AskUser` to confirm, then call again WITH `confirm: true`.
 
 ### Context refresh
 
-Use `AskUserQuestion` to pick which setting to change:
+Use `AskUser` to pick which setting to change:
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Which context refresh setting?"
   header: "Refresh"
   options:
@@ -220,10 +221,10 @@ Then ask for the new value and call `set_config`.
 
 ### Message upload
 
-Use `AskUserQuestion` to pick which setting to change:
+Use `AskUser` to pick which setting to change:
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Which message upload setting?"
   header: "Upload"
   options:
@@ -239,10 +240,10 @@ Then ask for the new value and call `set_config`.
 
 ## Step 4: Loop
 
-After handling a selection, call `get_config` again to refresh state. Use `AskUserQuestion` to ask if they want to configure more:
+After handling a selection, call `get_config` again to refresh state. Use `AskUser` to ask if they want to configure more:
 
 ```
-AskUserQuestion:
+AskUser:
   question: "Configuration updated. What next?"
   header: "Next"
   options:
@@ -256,7 +257,7 @@ If "Configure more", go back to Step 2. If "Done", show the final status header 
 
 ## Guardrails
 
-- ALWAYS use AskUserQuestion for menus and confirmations. Never present numbered text lists.
+- ALWAYS use AskUser for menus and confirmations. Never present numbered text lists.
 - Always show the result of `set_config` including any cache invalidation that occurred.
 - If a warning about env var shadowing is returned, explain that the env var takes precedence at runtime.
 - Never guess values — always ask the user.

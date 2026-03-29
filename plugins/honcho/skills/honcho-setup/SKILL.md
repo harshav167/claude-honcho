@@ -1,11 +1,12 @@
 ---
+name: honcho-setup
 description: First-time Honcho configuration -- set API key, validate connection, create config
 user-invocable: true
 ---
 
 # Honcho Setup
 
-Walk the user through first-time Honcho configuration so persistent memory works in Claude Code.
+Walk the user through first-time Honcho configuration so persistent memory works in Droid.
 
 ## Steps
 
@@ -39,7 +40,7 @@ Detect the platform and give the appropriate command:
 > ```powershell
 > setx HONCHO_API_KEY "your-key-here"
 > ```
-> Then restart Claude Code and run `/honcho:setup` again.
+> Then restart Droid and run `/honcho-setup` again.
 
 **If macOS / Linux:**
 
@@ -47,11 +48,11 @@ Detect the platform and give the appropriate command:
 > ```
 > export HONCHO_API_KEY="your-key-here"
 > ```
-> Then restart Claude Code and run `/honcho:setup` again.
+> Then restart Droid and run `/honcho-setup` again.
 
 IMPORTANT: Do NOT ask the user to paste their API key into the chat. Keys must be set via environment variable outside of Claude Code.
 
-Stop here and wait for the user to come back after restarting. Do not proceed to validation until the user runs `/honcho:setup` again.
+Stop here and wait for the user to come back after restarting. Do not proceed to validation until the user runs `/honcho-setup` again.
 
 ### 3. Validate the API key
 

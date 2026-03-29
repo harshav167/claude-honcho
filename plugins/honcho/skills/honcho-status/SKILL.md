@@ -1,4 +1,5 @@
 ---
+name: honcho-status
 description: Show current Honcho memory status and configuration
 user-invocable: true
 ---
@@ -17,7 +18,7 @@ Display the current Honcho memory system status: connection health, workspace, p
 
 ## Usage
 
-Run `/honcho:status` to see the current state of the Honcho memory system.
+Run `/honcho-status` to see the current state of the Honcho memory system.
 
 ## Presentation
 
